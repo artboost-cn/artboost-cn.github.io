@@ -27,8 +27,7 @@
     let lastTime = null
     let videoList = ["teststone01.mp4", "teststone02.mp4", "teststone03.mp4", "teststone04.mp4", "teststone05.mp4", "teststone06.mp4", "teststone07.mp4", "teststone08.mp4", "teststone09.mp4", "teststone10.mp4", "teststone11.mp4", "teststone12.mp4", "teststone13.mp4"];
     let video = document.getElementById("myVideo");
-    let source = document.querySelector("https://github.com/artboost-cn/artboost-cn.github.io/raw/main");
-    //let source = document.querySelector(".my-video source");
+    let source = document.querySelector(".my-video source");
     let videoNum = document.getElementById("videoNum");
     let pwd = document.getElementById("pwd");
     let container = document.getElementById("container");
@@ -49,7 +48,7 @@
             // 判断视频列表是否为空
             console.log(videoTotalIndex)
             if (videoList[videoTotalIndex]) {
-                source.setAttribute(""https://github.com/artboost-cn/artboost-cn.github.io/raw/main", '/video/' + videoList[videoTotalIndex]);
+                source.setAttribute("src", 'https://github.com/artboost-cn/artboost-cn.github.io/raw/main/video/' + videoList[videoTotalIndex]);
             } else {
                 videoTotalIndex = -1
             }
