@@ -6,26 +6,35 @@
     <link rel="stylesheet"  href="./css/common.css" type="text/css" media="all" />
 </head>
 <body>
-<div class="contianer">
+<div id="container" class="contianer" style="display: none" onclick="containerClick()">
     <video class="my-video" id="myVideo" autoplay="autoplay">
-        <source src="./video/v14.m4v" type="video/mp4">
+        <source src="./video/v14.mp4" type="video/mp4">
     </video>
     <div class="video-num" id="videoNum"></div>
 </div>
+<!--密码-->
+<div class="pwd-input" id="pwdContainer">
+    <input id="pwd" class="input" type="password" placeholder="请输入密码" value/>
+    <button id="login" class="btn" onclick="login()">登录</button>
+</div>
 <script>
-    let num = 980 // 数字初始值
+    let num = 970 // 数字初始值
     let currentVideoIndex = 0
     let videoTotalIndex = -1
     let exceedingQuantity = 1000 // 超出多少后播放另一个常备视频
     let isClick = false
+    let isLogin = false
     let lastTime = null
     let videoList = ["teststone01.mp4", "teststone02.mp4", "teststone03.mp4", "teststone04.mp4", "teststone05.mp4", "teststone06.mp4", "teststone07.mp4", "teststone08.mp4", "teststone09.mp4", "teststone10.mp4", "teststone11.mp4", "teststone12.mp4", "teststone13.mp4"];
     let video = document.getElementById("myVideo");
     let source = document.querySelector(".my-video source");
     let videoNum = document.getElementById("videoNum");
+    let pwd = document.getElementById("pwd");
+    let container = document.getElementById("container");
+    let pwdContainer = document.getElementById("pwdContainer");
 
     // 用户点击按钮后，播放视频
-    window.addEventListener("click", function() {
+    function containerClick() {
         if (isClick) {
             // 判断视频是否已经播放完毕
             //if (!video.ended && currentVideoIndex != 0) {
@@ -50,7 +59,7 @@
             isClick = true
             video.play();
         }
-    });
+    }
 
     // 监听视频播放结束的事件
     video.addEventListener("ended", function() {
@@ -68,6 +77,25 @@
             video.play();
         }
     });
-</script>
+
+
+    // 登录
+    function login() {
+        console.log(pwd.value)
+        if (pwd.value == 'artboost') {
+            window.localStorage.setItem('pwd', pwd.value)
+            container.style.display = 'block'
+            pwdContainer.style.display = 'none'
+            isLogin = true
+        } else {
+            alert('密码不正确')
+        }
+    }
+    if (window.localStorage.getItem('pwd')) {
+        container.style.display = 'block'
+        pwdContainer.style.display = 'none'
+        isLogin = true
+    }
+    </script>
 </body>
 </html>
