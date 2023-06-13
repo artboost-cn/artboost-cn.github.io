@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>视频播放</title>
+    <link rel="stylesheet"  href="./css/common.css" type="text/css" media="all" />
+</head>
+<body>
+<div class="contianer">
+    <video class="my-video" id="myVideo" autoplay="autoplay">
+        <source src="./video/v14.m4v" type="video/mp4">
+    </video>
+    <div class="video-num" id="videoNum"></div>
+</div>
+<script>
+    let num = 980 // 数字初始值
+    let currentVideoIndex = 0
+    let videoTotalIndex = -1
+    let exceedingQuantity = 1000 // 超出多少后播放另一个常备视频
+    let isClick = false
+    let lastTime = null
+    let videoList = ["teststone01.mp4", "teststone02.mp4", "teststone03.mp4", "teststone04.mp4", "teststone05.mp4", "teststone06.mp4", "teststone07.mp4", "teststone08.mp4", "teststone09.mp4", "teststone10.mp4", "teststone11.mp4", "teststone12.mp4", "teststone13.mp4"];
+    let video = document.getElementById("myVideo");
+    let source = document.querySelector(".my-video source");
+    let videoNum = document.getElementById("videoNum");
+
+    // 用户点击按钮后，播放视频
+    window.addEventListener("click", function() {
+        if (isClick) {
+            // 判断视频是否已经播放完毕
+            //if (!video.ended && currentVideoIndex != 0) {
+            //    return;
+            //}
+            num ++
+            currentVideoIndex ++
+            videoTotalIndex ++
+            lastTime = video.currentTime
+            video.removeAttribute("loop");
+            // 判断视频列表是否为空
+            console.log(videoTotalIndex)
+            if (videoList[videoTotalIndex]) {
+                source.setAttribute("src", './video/' + videoList[videoTotalIndex]);
+            } else {
+                videoTotalIndex = -1
+            }
+            video.load(); // 加载新的视频资源
+            videoNum.innerText = num
+            video.play(); // 播放新的视频
+        } else {
+            isClick = true
+            video.play();
+        }
+    });
+
+    // 监听视频播放结束的事件
+    video.addEventListener("ended", function() {
+        console.log(lastTime, currentVideoIndex)
+        if (currentVideoIndex > 0) {
+            currentVideoIndex = 0
+            video.setAttribute("loop", 'loop');
+            if (num <= exceedingQuantity) {
+                source.setAttribute("src", './video/v14.mp4');
+            } else {
+                source.setAttribute("src", './video/v16.mp4');
+            }
+            video.load();
+            video.currentTime = lastTime;
+            video.play();
+        }
+    });
+</script>
+</body>
+</html>
